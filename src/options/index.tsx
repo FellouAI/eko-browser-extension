@@ -50,6 +50,7 @@ const OptionsPage = () => {
   const modelLLMs = [
     { value: "claude", label: "Claude (default)" },
     { value: "openai", label: "OpenAI" },
+    { value: "deepseek", label: "DeepSeek" },
   ];
 
   const modelOptions = {
@@ -61,7 +62,12 @@ const OptionsPage = () => {
       { value: "gpt-4o", label: "gpt-4o (default)" },
       { value: "gpt-4o-mini", label: "gpt-4o-mini" },
       { value: "gpt-4", label: "gpt-4" },
+      { value: "deepseek-ai/DeepSeek-V3", label: "deepseek-ai/DeepSeek-V3" },
     ],
+    deepseek: [
+      { value: "deepseek-chat", label: "DeepSeek V3 (default)" },
+      { value: "deepseek-reasoner", label: "DeepSeek-R1" },
+    ]
   };
 
   const handleLLMChange = (value: string) => {
@@ -70,10 +76,11 @@ const OptionsPage = () => {
       apiKey: "",
       modelName: modelOptions[value][0].value,
       options: {
-        baseURL:
-          value === "openai"
-            ? "https://api.openai.com/v1"
-            : "https://api.anthropic.com",
+        baseURL: {
+          "openai": "https://api.openai.com/v1",
+          "claude": "https://api.anthropic.com",
+          "deepseek": "https://api.deepseek.com",
+        }[value]
       },
     };
     setConfig(newConfig);
